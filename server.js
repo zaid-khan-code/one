@@ -53,8 +53,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Health check endpoint
-app.get('/health', (req, res) => {
+// Health check endpoint (supports both /health and /api/health)
+app.get(['/health', '/api/health'], (req, res) => {
   res.json({
     status: 'ok',
     uptime: Math.floor(process.uptime()),
