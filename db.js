@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Parse PostgreSQL BIGINT (OID 20) and NUMERIC (OID 1700) as numbers
+pg.types.setTypeParser(20, (val) => (val === null ? null : parseInt(val, 10)));
+pg.types.setTypeParser(1700, (val) => (val === null ? null : parseFloat(val)));
+
 const pool = new pg.Pool({
   user: process.env.DB_USER || 'postgres',
   host: process.env.DB_HOST || 'localhost',

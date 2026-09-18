@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/stats', verifyDashboardToken, async (req, res) => {
   let client;
   try {
-    const yearParam = req.query.year || '2026-27';
+    const rawYear = req.query.year;
+    const yearParam = (Array.isArray(rawYear) ? rawYear[0] : rawYear) || '2026-27';
 
     client = await connectToDatabase();
 

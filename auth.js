@@ -6,7 +6,8 @@ export const verifyDashboardToken = (req, res, next) => {
   const expectedToken = process.env.DASHBOARD_API_SECRET;
 
   if (!expectedToken) {
-    return next();
+    console.error('CRITICAL: DASHBOARD_API_SECRET is not configured in environment variables');
+    return res.status(500).json({ error: 'Server authentication misconfiguration' });
   }
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
